@@ -1,6 +1,6 @@
 //////////////////////////////////
 // FILES
-// const fs = require("fs");
+const fs = require("fs");
 
 // blocking,synchronous way
 // const textIn = fs.readFileSync("./txt/input.txt", "utf-8");
@@ -31,12 +31,18 @@
 const http = require("http");
 const url = require("url");
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
   const pathName = req.url;
   if (pathName === "/" || pathName === "/overview") {
     res.end("this is page Overview");
   } else if (pathName === "/product") {
     res.end("this is page Overview");
+  } else if (pathName === "/api") {
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(data);
   } else {
     res.writeHead(404, {
       "content-type": "text/html",
